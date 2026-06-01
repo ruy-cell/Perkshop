@@ -1,0 +1,10 @@
+{
+  "name": "PerkShop",
+  "version_number": "0.2.1",
+  "website_url": "https://github.com/ruy-cell/Perkshop",
+  "description": "Server-side V Rising perk shop with persistent stat perks, renewable timed buffs, blood-buff slots, admin tools, and Bloodcraft-compatible defaults.",
+  "dependencies": [
+    "BepInEx-BepInExPack_V_Rising-1.733.2",
+    "deca-VampireCommandFramework-0.11.0"
+  ]
+}

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Authors>yenko2000</Authors>
+    <RepositoryUrl>https://github.com/yenko2000/PerkShop</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/yenko2000/PerkShop</PackageProjectUrl>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>PerkShop</AssemblyName>
+    <Description>Chat-command V Rising shop that lets players buy configurable buffs.</Description>
+    <Version>0.2.0</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <NoWarn>NU1605</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="VampireCommandFramework">
+      <HintPath>libs\VampireCommandFramework.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+
+    <Reference Include="0Harmony" HintPath="core/core/0Harmony.dll" />
+    <Reference Include="BepInEx.Core" HintPath="core/core/BepInEx.Core.dll" />
+    <Reference Include="BepInEx.Unity.Common" HintPath="core/core/BepInEx.Unity.Common.dll" />
+    <Reference Include="BepInEx.Unity.IL2CPP" HintPath="core/core/BepInEx.Unity.IL2CPP.dll" />
+    <Reference Include="Il2CppInterop.Common" HintPath="core/core/Il2CppInterop.Common.dll" />
+    <Reference Include="Il2CppInterop.HarmonySupport" HintPath="core/core/Il2CppInterop.HarmonySupport.dll" />
+    <Reference Include="Il2CppInterop.Runtime" HintPath="core/core/Il2CppInterop.Runtime.dll" />
+
+    <Reference Include="Il2Cppmscorlib" HintPath="interop/Il2Cppmscorlib.dll" />
+    <Reference Include="Il2CppSystem" HintPath="interop/Il2CppSystem.dll" />
+    <Reference Include="Il2CppSystem.Core" HintPath="interop/Il2CppSystem.Core.dll" />
+    <Reference Include="ProjectM" HintPath="interop/ProjectM.dll" />
+    <Reference Include="ProjectM.CodeGeneration" HintPath="interop/ProjectM.CodeGeneration.dll" />
+    <Reference Include="ProjectM.Gameplay.Scripting" HintPath="interop/ProjectM.Gameplay.Scripting.dll" />
+    <Reference Include="ProjectM.Gameplay.Systems" HintPath="interop/ProjectM.Gameplay.Systems.dll" />
+    <Reference Include="ProjectM.GeneratedNetCode" HintPath="interop/ProjectM.GeneratedNetCode.dll" />
+    <Reference Include="ProjectM.Shared" HintPath="interop/ProjectM.Shared.dll" />
+    <Reference Include="Stunlock.Core" HintPath="interop/Stunlock.Core.dll" />
+    <Reference Include="Stunlock.Network" HintPath="interop/Stunlock.Network.dll" />
+    <Reference Include="Unity.Collections" HintPath="interop/Unity.Collections.dll" />
+    <Reference Include="Unity.Entities" HintPath="interop/Unity.Entities.dll" />
+    <Reference Include="Unity.Mathematics" HintPath="interop/Unity.Mathematics.dll" />
+    <Reference Include="Unity.Transforms" HintPath="interop/Unity.Transforms.dll" />
+    <Reference Include="UnityEngine" HintPath="interop/UnityEngine.dll" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="interop/UnityEngine.CoreModule.dll" />
+  </ItemGroup>
+</Project>
