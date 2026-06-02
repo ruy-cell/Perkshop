@@ -21,7 +21,7 @@ Reload after editing:
 | `EnableBuffShop` | `true` | Enables buff purchases. |
 | `EnableStatShop` | `true` | Enables stat purchases. |
 | `ForcePermanentBuffs` | `true` | Ensures purchased buffs are maintained by ownership sync. |
-| `RenewableTimedBuffDurationSeconds` | `7200` | Default renewable duration for potion/elixir/blood buffs. |
+| `RenewableTimedBuffDurationSeconds` | `7200` | Default renewable duration for potion/elixir/blood/relic buffs. |
 | `EnableClientUnsupportedStats` | `true` | Applies all configured stats, even if the client UI does not display them. |
 | `EnableExperimentalBloodBuffs` | `true` | Enables configured blood-buff entries. |
 | `ReapplyOwnedBuffsWhenMissing` | `true` | Periodically reapplies missing owned buffs/stats. |
@@ -57,7 +57,7 @@ Set `MaxOwnedSlots` to `-1` for unlimited slots.
 
 ## Renewable timed buffs
 
-Potions, elixirs, and blood buffs are intended to keep a normal countdown and renew when missing/expired.
+Potions, elixirs, blood buffs, and relic buffs are intended to keep a normal countdown and renew when missing/expired.
 
 This is preferred over force-removing `LifeTime`, which can leave stale client UI state for some vanilla buff prefabs.
 
@@ -65,3 +65,24 @@ This is preferred over force-removing `LifeTime`, which can leave stale client U
 ## Key reference
 
 See [`KEYS.md`](KEYS.md) for the complete short stat and blood-buff key list.
+
+
+## Per-entry currency override
+
+Buff and stat entries can optionally set `CurrencyPrefab` and `CurrencyName`. If omitted, PerkShop uses the global default currency.
+
+
+## Entry-specific currency overrides
+
+Buff and stat entries can optionally override the global currency with:
+
+```json
+"CurrencyPrefab": 123456789,
+"CurrencyName": "Custom Currency"
+```
+
+If those fields are omitted, PerkShop uses the top-level global `CurrencyPrefab` and `CurrencyName`.
+
+## Relic category
+
+Relic tower buffs use the standardized `relic` category key.

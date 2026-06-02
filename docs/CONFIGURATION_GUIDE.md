@@ -45,7 +45,7 @@ Important fields:
 | `Enabled` | Enables this shop entry. |
 | `PrefabGUID` | V Rising buff prefab GUID. |
 | `Name` | Display name shown in commands. |
-| `Category` | Slot category such as `potion`, `elixir`, `blood_buff`, `set_bonus`, or `misc`. |
+| `Category` | Slot category such as `potion`, `elixir`, `blood_buff`, `relic`, `set_bonus`, or `misc`. |
 | `CostPrefabGUID` | Currency item prefab GUID. |
 | `CostAmount` | Purchase cost. |
 | `DurationSeconds` | Use `7200` or the global renewable value for timed renewable buffs. |
@@ -126,3 +126,34 @@ If a stat has gameplay effect but does not appear in TAB/Eclipse, it is likely a
 ## Key reference
 
 See [`KEYS.md`](KEYS.md) for the complete short stat and blood-buff key list.
+
+
+Example per-entry currency override:
+
+```json
+{
+  "CurrencyPrefab": 123456789,
+  "CurrencyName": "Special Token"
+}
+```
+
+
+## Currency overrides
+
+Use the top-level currency fields for the default shop currency:
+
+```json
+"CurrencyPrefab": 576389135,
+"CurrencyName": "Greater Stygian Shards"
+```
+
+To make a specific buff or stat use a different item, add entry-specific fields:
+
+```json
+"CurrencyPrefab": 1223839144,
+"CurrencyName": "Crystal"
+```
+
+## Relic buffs
+
+Relic tower entries should use the `relic` category key.

@@ -82,6 +82,17 @@ Blood buffs use simple `<bloodType>T<tier>` keys. Dracula blood and General T5 a
 | `draculaT5` | Dracula Blood Tier 5 | `-1923843097` | no |
 | `generalT5` | General Blood Tier 5 | `947312310` | no |
 
+
+## Relic buff keys
+
+| Key | Display name | PrefabGUID | Enabled by default |
+|---|---|---:|:---:|
+| `relicBehemoth` | Behemoth Relic Blessing | `-1703886455` | yes |
+| `relicManticore` | Manticore Relic Blessing | `-238197495` | yes |
+| `relicMonster` | Monster Relic Blessing | `1068709119` | yes |
+| `relicPaladin` | Paladin Relic Blessing | `-1161197991` | yes |
+
+
 ## Example commands
 
 ```text
@@ -89,4 +100,5 @@ Blood buffs use simple `<bloodType>T<tier>` keys. Dracula blood and General T5 a
 .perk statbuy SR
 .perk buffbuy warriorT1
 .perk buffbuy rogueT2
+.perk buffbuy relicBehemoth
 ```

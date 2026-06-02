@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yenko\\OneDrive\\Escritorio\\thunderstone test\\PerkShop.csproj": {}
+    "C:\\Users\\yenko\\OneDrive\\Escritorio\\Test\\PerkShop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yenko\\OneDrive\\Escritorio\\thunderstone test\\PerkShop.csproj": {
-      "version": "0.1.2",
+    "C:\\Users\\yenko\\OneDrive\\Escritorio\\Test\\PerkShop.csproj": {
+      "version": "0.3.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yenko\\OneDrive\\Escritorio\\thunderstone test\\PerkShop.csproj",
+        "projectUniqueName": "C:\\Users\\yenko\\OneDrive\\Escritorio\\Test\\PerkShop.csproj",
         "projectName": "PerkShop",
-        "projectPath": "C:\\Users\\yenko\\OneDrive\\Escritorio\\thunderstone test\\PerkShop.csproj",
+        "projectPath": "C:\\Users\\yenko\\OneDrive\\Escritorio\\Test\\PerkShop.csproj",
         "packagesPath": "C:\\Users\\yenko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yenko\\OneDrive\\Escritorio\\thunderstone test\\obj\\",
+        "outputPath": "C:\\Users\\yenko\\OneDrive\\Escritorio\\Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
