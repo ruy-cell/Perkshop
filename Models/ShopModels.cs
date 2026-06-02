@@ -140,6 +140,8 @@ public sealed class PerkShopEntry
 
     public int BuffPrefab { get; set; }
     public int Cost { get; set; } = 100;
+    public int? CurrencyPrefab { get; set; }
+    public string? CurrencyName { get; set; }
 
     // If true, buying this buff records ownership and reapplication can restore it after login/respawn.
     public bool PersistentPurchase { get; set; } = true;
@@ -178,6 +180,8 @@ public sealed class StatShopEntry
     public string AttributeCapType { get; set; } = "Uncapped";
     public float ValuePerPurchase { get; set; } = 1f;
     public int Cost { get; set; } = 100;
+    public int? CurrencyPrefab { get; set; }
+    public string? CurrencyName { get; set; }
     public int MaxPurchases { get; set; } = 1; // <= 0 = unlimited
     public string Notes { get; set; } = "Permanent stat purchase.";
 }
