@@ -4,6 +4,15 @@ PerkShop is a server-side V Rising mod that adds a configurable perk shop throug
 
 Players can buy persistent buffs and stat perks. Admins can grant, revoke, whitelist, inspect, validate, reload, and sync player perks. Stats acquired via PerkShop may not all appear in the player's UI, but they still have gameplay effects.
 
+
+> Current packaged source version: **0.3.0**
+>
+> Highlights in this release:
+> - per-entry currency overrides for buffs and stats
+> - relic tower buffs included in the default config
+> - relic category standardized to `relic`
+> - expanded command/config/key documentation
+
 Command prefix:
 
 ```text
@@ -19,20 +28,22 @@ PerkShop was inspired by and built with reference to the V Rising modding commun
 
 ## Transparency
 
-The original working code for the mod is human made, but it has been greatly tinkered with AI for debuging and optimization.
+The original working code for the mod is human made, but it has been greatly tinkered with AI for debugging and optimization.
 
 ## Features
 
 - Configurable buff shop.
 - Configurable permanent stat shop.
-- Renewable timed buffs for potions, elixirs, and blood buffs.
+- Renewable timed buffs for potions, elixirs, blood buffs, and relics.
 - Blood-buff category defaults to five slots.
-- Purchased ownership persists across relogs/restarts.
+- Relic category defaults to four slots.
+- Purchased ownership persists across relogs/restarts, with manual session sync available.
 - Admin-given buffs and flat stats.
 - Buff/stat whitelist support.
 - `.perk validate`, `.perk diag`, `.perk reload`, and `.perk syncall` for live-server administration.
 - Debounced JSON persistence and throttled periodic reapply.
 - Bloodcraft-safe default stat carrier.
+- Optional per-entry currency override while keeping a global default currency.
 
 ## Dependencies
 
@@ -67,182 +78,140 @@ Then edit the config and reload in game:
 .perk diag
 ```
 
----
-
-<details>
-<summary><strong>Commands</strong></summary>
+## Command Reference
 
 ### Player commands
 
-```text
-.perk menu
-.perk status [page]
-.perk search <text>
-.perk sync
-
-.perk bufflist [page]
-.perk buffdet <buffKey>
-.perk buffbuy <buffKey>
-.perk buffremove <buffKey>
-
-.perk statlist [page]
-.perk statdet <statKey>
-.perk statbuy <statKey>
-.perk statremove <statKey>
-```
+| Command | Description |
+|---|---|
+| `.perk menu` | Shows the main PerkShop command menu. |
+| `.perk status [page]` | Shows your owned buffs, purchased stats, admin grants, and slot usage. |
+| `.perk search <text>` | Searches configured buff and stat entries by key or name. |
+| `.perk sync` | Reapplies your owned buffs and stats for the current session. |
+| `.perk bufflist [page]` | Lists available buff purchase keys. |
+| `.perk buffdet <buffKey>` | Shows detailed information for a buff entry, including cost, category, and notes. |
+| `.perk buffbuy <buffKey>` | Buys a buff entry using its configured currency. |
+| `.perk buffremove <buffKey>` | Removes one owned buff entry from your active setup. |
+| `.perk statlist [page]` | Lists available stat purchase keys. |
+| `.perk statdet <statKey>` | Shows detailed information for a stat entry. |
+| `.perk statbuy <statKey>` | Buys one rank of a stat entry. |
+| `.perk statremove <statKey>` | Removes all purchased ranks of one stat entry. |
 
 ### Admin commands
 
-```text
-.perk admin
-.perk info <player>
-.perk reload
-.perk validate
-.perk diag
-.perk syncall
-
-.perk giftbuff <player> <buffKey>
-.perk revokebuff <player> <buffKey>
-.perk addbuff <player> <buffKey>
-.perk clearbuff <player> <buffKey>
-
-.perk giftstat <player> <statKey> <ranks>
-.perk revokestat <player> <statKey> <ranks>
-.perk addflat <player> <UnitStat|statKey> <amount>
-.perk clearflat <player> <UnitStat|statKey>
-```
+| Command | Description |
+|---|---|
+| `.perk admin` | Shows the admin command menu. |
+| `.perk info <player>` | Shows PerkShop ownership and status info for a player. |
+| `.perk reload` | Flushes pending saves, reloads config, and rebuilds runtime caches. |
+| `.perk diag` | Shows runtime diagnostics for troubleshooting. |
+| `.perk validate` | Validates config entries and reports risky or invalid settings. |
+| `.perk syncall` | Reapplies PerkShop buffs and stats for cached online users. |
+| `.perk giftbuff <player> <buffKey>` | Grants purchased-style buff ownership to a player. |
+| `.perk revokebuff <player> <buffKey>` | Removes purchased-style buff ownership from a player. |
+| `.perk addbuff <player> <buffKey>` | Grants an admin-only buff entry to a player. |
+| `.perk clearbuff <player> <buffKey>` | Removes an admin-only buff grant and clears the active buff. |
+| `.perk giftstat <player> <statKey> <ranks>` | Grants purchased-style stat ranks to a player. |
+| `.perk revokestat <player> <statKey> <ranks>` | Revokes purchased-style stat ranks from a player. |
+| `.perk addflat <player> <UnitStat|statKey> <amount>` | Adds an admin flat stat modifier. |
+| `.perk clearflat <player> <UnitStat|statKey>` | Removes an admin flat stat modifier. |
 
 ### Whitelist commands
 
-```text
-.perk wlstatus
-.perk wlcheckbuff
-.perk wlcheckstat
-.perk wlcheckall
+| Command | Description |
+|---|---|
+| `.perk wlstatus` | Shows whether buff/stat whitelists are enabled and how many players are listed. |
+| `.perk wlcheckbuff` | Checks whether you can use the buff shop. |
+| `.perk wlcheckstat` | Checks whether you can use the stat shop. |
+| `.perk wlcheckall` | Checks both whitelist types for your current character. |
+| `.perk wlplayer <player>` | Checks whitelist status for a target player. |
+| `.perk wladdbuff <player>` | Adds a player to the buff whitelist. |
+| `.perk wlremovebuff <player>` | Removes a player from the buff whitelist. |
+| `.perk wladdstat <player>` | Adds a player to the stat whitelist. |
+| `.perk wlremovestat <player>` | Removes a player from the stat whitelist. |
 
-.perk wlplayer <player>
-.perk wladdbuff <player>
-.perk wlremovebuff <player>
-.perk wladdstat <player>
-.perk wlremovestat <player>
-```
+## Configuration Reference
 
-</details>
-
-<details>
-<summary><strong>Whitelist management</strong></summary>
-
-PerkShop has optional whitelist controls for limiting who can use the buff shop, stat shop, or both.
-
-Whitelist behavior is controlled in `BepInEx/config/PerkShop/perkconfig.json`.
-
-Typical whitelist fields are:
-
-```json
-{
-  "EnableBuffWhitelist": false,
-  "EnableStatWhitelist": false,
-  "BuffWhitelist": [],
-  "StatWhitelist": []
-}
-```
-
-When a whitelist is disabled, everyone can use that shop if the shop itself is enabled.
-
-When a whitelist is enabled, only players in that whitelist can buy/use that shop.
-
-### Check whitelist state
-
-```text
-.perk wlstatus
-```
-
-Shows whether buff/stat whitelists are enabled and how many players are listed.
-
-```text
-.perk wlcheckbuff
-.perk wlcheckstat
-.perk wlcheckall
-```
-
-Checks whether your current character is allowed to use the buff shop, stat shop, or both.
-
-### Check a specific player
-
-```text
-.perk wlplayer <player>
-```
-
-Shows whether a player is currently allowed to use PerkShop features.
-
-### Add or remove a player
-
-Allow a player to use the buff shop:
-
-```text
-.perk wladdbuff <player>
-```
-
-Remove a player from the buff shop whitelist:
-
-```text
-.perk wlremovebuff <player>
-```
-
-Allow a player to use the stat shop:
-
-```text
-.perk wladdstat <player>
-```
-
-Remove a player from the stat shop whitelist:
-
-```text
-.perk wlremovestat <player>
-```
-
-### Recommended whitelist setup
-
-For a public server, a common setup is:
-
-```json
-{
-  "EnableBuffWhitelist": false,
-  "EnableStatWhitelist": false
-}
-```
-
-For a donor/event/admin-only perk shop, enable one or both whitelists and add players with the commands above.
-
-Whitelist data is saved in PerkShop's config/data files and persists across restarts.
-
-</details>
-
-<details>
-<summary><strong>Configuration</strong></summary>
-
-Main config file:
+Config file:
 
 ```text
 BepInEx/config/PerkShop/perkconfig.json
 ```
 
-Recommended live-server defaults:
+Reload after editing:
+
+```text
+.perk reload
+.perk validate
+```
+
+### Important top-level options
+
+| Field | Default | Description |
+|---|---:|---|
+| `Enabled` | `true` | Enables or disables PerkShop. |
+| `EnableBuffShop` | `true` | Enables buff purchases. |
+| `EnableStatShop` | `true` | Enables stat purchases. |
+| `ForcePermanentBuffs` | `true` | Ensures purchased buffs are maintained by ownership sync. |
+| `RenewableTimedBuffDurationSeconds` | `7200` | Default renewable duration for potion/elixir/blood/relic buffs. |
+| `EnableClientUnsupportedStats` | `true` | Applies all configured stats, even if the client UI does not display them. |
+| `EnableExperimentalBloodBuffs` | `true` | Enables configured blood-buff entries. |
+| `ReapplyOwnedBuffsWhenMissing` | `true` | Periodically reapplies missing owned buffs/stats. |
+| `ReapplyCheckIntervalSeconds` | `60` | Reapply scan interval. |
+| `ReapplyMaxUsersPerCycle` | `5` | Max cached users processed per reapply cycle. |
+| `OwnershipSaveDebounceSeconds` | `2` | Debounces ownership JSON writes. |
+| `PlayerCacheSaveDebounceSeconds` | `30` | Debounces player-cache writes. |
+| `EnableDebugLogging` | `false` | Enables verbose PerkShop logs. |
+
+### Stat carrier
+
+Default:
 
 ```json
-{
-  "EnableDebugLogging": false,
-  "AutoDetectConfigChanges": false,
-  "ReapplyOwnedBuffsWhenMissing": true,
-  "ReapplyCheckIntervalSeconds": 60,
-  "ReapplyMaxUsersPerCycle": 5,
-  "OwnershipSaveDebounceSeconds": 2,
-  "PlayerCacheSaveDebounceSeconds": 30,
-  "RenewableTimedBuffDurationSeconds": 7200
+"StatCarrierBuffPrefab": -809648681
+```
+
+This is intended to avoid Bloodcraft's known carrier. Keep it configurable for compatibility with other servers/mod stacks.
+
+### Buff categories
+
+Blood buffs default to five slots:
+
+```json
+"BuffCategories": {
+  "blood_buff": {
+    "MaxOwnedSlots": 5
+  }
 }
 ```
 
-After editing the config, reload and validate:
+Relic buffs default to four slots:
+
+```json
+"BuffCategories": {
+  "relic": {
+    "MaxOwnedSlots": 4
+  }
+}
+```
+
+Set `MaxOwnedSlots` to `-1` for unlimited slots.
+
+### Renewable timed buffs
+
+Potions, elixirs, blood buffs, and relic buffs are intended to keep a normal countdown and renew when missing or expired.
+
+This is preferred over force-removing `LifeTime`, which can leave stale client UI state for some vanilla buff prefabs.
+
+## Configuration Guide
+
+### Workflow
+
+1. Start the server once to generate config.
+2. Stop the server.
+3. Edit `BepInEx/config/PerkShop/perkconfig.json`.
+4. Start the server.
+5. Run:
 
 ```text
 .perk reload
@@ -250,170 +219,149 @@ After editing the config, reload and validate:
 .perk diag
 ```
 
-### Adding buffs to the shop
-
-PerkShop buffs are configured under the `Buffs` object. Each entry key is the command key players use with `.perk buffbuy <key>`.
-
-Minimal example:
+### Recommended live defaults
 
 ```json
-"myBuffKey": {
+{
   "Enabled": true,
-  "DisplayName": "My Custom Buff",
-  "Category": "misc",
-  "BuffPrefab": 123456789,
-  "Cost": 100,
-  "PersistentPurchase": true,
-  "PreventDuplicate": true,
-  "DurationSeconds": 7200,
-  "PersistThroughDeath": false,
-  "MutateAppliedBuffLifetime": true,
-  "Notes": "Short explanation shown in .perk buffdet."
+  "EnableBuffShop": true,
+  "EnableStatShop": true,
+  "EnableClientUnsupportedStats": true,
+  "EnableExperimentalBloodBuffs": true,
+  "RenewableTimedBuffDurationSeconds": 7200,
+  "ReapplyCheckIntervalSeconds": 60,
+  "ReapplyMaxUsersPerCycle": 5,
+  "OwnershipSaveDebounceSeconds": 2,
+  "PlayerCacheSaveDebounceSeconds": 30,
+  "EnableDebugLogging": false
 }
 ```
 
-Recommended process:
+### Buff entries
 
-1. Pick a short, clear key such as `ragePotion`, `sunImmune`, or `warriorT1`.
-2. Set `BuffPrefab` to the V Rising `PrefabGUID` for the buff.
-3. Choose an existing category such as `potion`, `elixir`, `blood_buff`, or `misc`.
-4. Set `Cost` and `Enabled`.
-5. Run `.perk reload`, then `.perk validate`.
-6. Test with `.perk buffdet <key>` and `.perk buffbuy <key>`.
+Each buff entry defines a buyable persistent perk.
 
-Important fields:
+Buff entries can optionally override the global currency with `CurrencyPrefab` and `CurrencyName`.
 
-| Field | Purpose |
+| Field | Description |
 |---|---|
-| `Enabled` | Whether players can see/buy the buff. |
-| `DisplayName` | Friendly name shown in commands. |
-| `Category` | Slot group. `blood_buff` defaults to five slots. |
-| `BuffPrefab` | The V Rising buff `PrefabGUID` to apply. |
-| `Cost` | Currency cost per purchase. |
-| `PersistentPurchase` | Saves ownership and reapplies the buff when missing. |
-| `PreventDuplicate` | Blocks buying/applying a duplicate active buff. |
-| `DurationSeconds` | Active buff duration. Renewable categories use the configured renewable duration. |
-| `PersistThroughDeath` | Whether the active buff instance should persist through death when not using renewable timed mode. |
-| `MutateAppliedBuffLifetime` | Advanced compatibility setting. Leave true unless testing a special buff. |
-| `Notes` | Description shown by `.perk buffdet`. |
+| `Enabled` | Enables this shop entry. |
+| `PrefabGUID` | V Rising buff prefab GUID. |
+| `Name` | Display name shown in commands. |
+| `Category` | Slot category such as `potion`, `elixir`, `blood_buff`, `relic`, `set_bonus`, or `misc`. |
+| `CostPrefabGUID` | Currency item prefab GUID. |
+| `CostAmount` | Purchase cost. |
+| `DurationSeconds` | Use `7200` or the global renewable value for timed renewable buffs. |
+| `PersistThroughDeath` | Whether PerkShop should maintain ownership after death. |
+| `Notes` | Admin-facing description. |
 
-Potions, elixirs, and blood buffs use renewable timed mode by default. They keep a visible countdown and are reapplied by ownership when missing or expired. This is intentional and safer than stripping vanilla lifetime cleanup.
+### Stat entries
 
-Avoid adding exotic or scripted buffs unless you test them carefully. Good candidates are passive stat buffs, consumable-style buffs, blood-tier buffs, and simple utility buffs. Avoid shapeshift, travel, channel, summon, boss phase, quest, tutorial, or temporary spell-execution buffs.
+Each stat entry defines a buyable stat rank.
 
-</details>
+Stat entries can also optionally override the global currency with `CurrencyPrefab` and `CurrencyName`.
 
-<details>
-<summary><strong>Keys</strong></summary>
+| Field | Description |
+|---|---|
+| `Enabled` | Enables this shop entry. |
+| `UnitStat` | V Rising `UnitStatType`. |
+| `ModificationType` | Usually `Add`; movement speed uses `MultiplyBaseAdd`. |
+| `ValuePerPurchase` | Modifier value per rank. |
+| `MaxPurchases` | Max ranks. |
+| `CostPrefabGUID` | Currency item prefab GUID. |
+| `CostAmount` | Cost per rank. |
+| `Notes` | Admin-facing description. |
+
+### UI limitations
+
+PerkShop applies stats server-side through V Rising stat modifiers. Some stats may affect gameplay but not appear in the vanilla TAB/Eclipse attributes UI.
+
+## Key Reference
 
 ### Stat keys
 
-Players use these keys with:
+| Key | Display name | UnitStat | Value per purchase | Max purchases |
+|---|---|---|---:|---:|
+| `MH` | Max Health | `MaxHealth` | 25 | 10 |
+| `PP` | Physical Power | `PhysicalPower` | 2 | 10 |
+| `SP` | Spell Power | `SpellPower` | 1 | 10 |
+| `MS` | Movement Speed | `MovementSpeed` | 0.05 | 5 |
+| `AS` | Primary Attack Speed | `PrimaryAttackSpeed` | 0.02 | 5 |
+| `phll` | Physical Life Leech | `PhysicalLifeLeech` | 0.02 | 5 |
+| `sll` | Spell Life Leech | `SpellLifeLeech` | 0.02 | 5 |
+| `prll` | Primary Life Leech | `PrimaryLifeLeech` | 0.03 | 5 |
+| `PCC` | Physical Critical Strike Chance | `PhysicalCriticalStrikeChance` | 0.02 | 5 |
+| `PCD` | Physical Critical Strike Damage | `PhysicalCriticalStrikeDamage` | 0.10 | 5 |
+| `SCC` | Spell Critical Strike Chance | `SpellCriticalStrikeChance` | 0.02 | 5 |
+| `SCD` | Spell Critical Strike Damage | `SpellCriticalStrikeDamage` | 0.10 | 5 |
+| `PR` | Physical Resistance | `PhysicalResistance` | 0.02 | 5 |
+| `SR` | Spell Resistance | `SpellResistance` | 0.02 | 5 |
+| `HR` | Healing Received | `HealingReceived` | 0.03 | 5 |
+| `DR` | Damage Reduction | `DamageReduction` | 0.01 | 5 |
+| `RY` | Resource Yield | `ResourceYield` | 0.05 | 5 |
+| `RBD` | Reduced Blood Drain | `ReducedBloodDrain` | 0.10 | 5 |
+| `SCR` | Spell Cooldown Recovery Rate | `SpellCooldownRecoveryRate` | 0.02 | 5 |
+| `WCR` | Weapon Cooldown Recovery Rate | `WeaponCooldownRecoveryRate` | 0.02 | 5 |
+| `UCR` | Ultimate Cooldown Recovery Rate | `UltimateCooldownRecoveryRate` | 0.04 | 5 |
+| `MD` | Minion Damage | `MinionDamage` | 0.05 | 5 |
+| `AAS` | Ability Attack Speed | `AbilityAttackSpeed` | 0.02 | 5 |
+| `CDR` | Corruption Damage Reduction | `CorruptionDamageReduction` | 0.02 | 5 |
 
-```text
-.perk statbuy <key>
-.perk statdet <key>
-.perk statremove <key>
-```
+### Blood buff keys
 
-Common stat keys:
+| Key | Display name | PrefabGUID | Enabled by default |
+|---|---|---:|:---:|
+| `bruteT1` | Brute Blood Tier 1 | `-1596803256` | yes |
+| `bruteT2` | Brute Blood Tier 2 | `1828387635` | yes |
+| `bruteT3` | Brute Blood Tier 3 | `-1861657718` | yes |
+| `bruteT4` | Brute Blood Tier 4 | `-584203677` | yes |
+| `corruptionT1` | Corruption Blood Tier 1 | `-302908776` | yes |
+| `corruptionT2` | Corruption Blood Tier 2 | `-771138642` | yes |
+| `corruptionT3` | Corruption Blood Tier 3 | `-1493903943` | yes |
+| `corruptionT4` | Corruption Blood Tier 4 | `1491794137` | yes |
+| `creatureT1` | Creature Blood Tier 1 | `894725875` | yes |
+| `creatureT2` | Creature Blood Tier 2 | `475045773` | yes |
+| `creatureT3` | Creature Blood Tier 3 | `-1055766373` | yes |
+| `creatureT4` | Creature Blood Tier 4 | `1643157297` | yes |
+| `draculinT1` | Draculin Blood Tier 1 | `1558171501` | yes |
+| `draculinT2` | Draculin Blood Tier 2 | `997154800` | yes |
+| `draculinT3` | Draculin Blood Tier 3 | `1159173627` | yes |
+| `draculinT4` | Draculin Blood Tier 4 | `1103099361` | yes |
+| `mutantT1` | Mutant Blood Tier 1 | `-1266262267` | yes |
+| `mutantT2` | Mutant Blood Tier 2 | `-1413561088` | yes |
+| `mutantT3` | Mutant Blood Tier 3 | `946705138` | yes |
+| `mutantT4` | Mutant Blood Tier 4 | `-491525099` | yes |
+| `rogueT1` | Rogue Blood Tier 1 | `1201299233` | yes |
+| `rogueT2` | Rogue Blood Tier 2 | `-154702686` | yes |
+| `rogueT3` | Rogue Blood Tier 3 | `-536284884` | yes |
+| `rogueT4` | Rogue Blood Tier 4 | `210193036` | yes |
+| `scholarT1` | Scholar Blood Tier 1 | `1934870645` | yes |
+| `scholarT2` | Scholar Blood Tier 2 | `-993492354` | yes |
+| `scholarT3` | Scholar Blood Tier 3 | `-901503997` | yes |
+| `scholarT4` | Scholar Blood Tier 4 | `-1859298707` | yes |
+| `warriorT1` | Warrior Blood Tier 1 | `-804597757` | yes |
+| `warriorT2` | Warrior Blood Tier 2 | `-1510965956` | yes |
+| `warriorT3` | Warrior Blood Tier 3 | `-1869022798` | yes |
+| `warriorT4` | Warrior Blood Tier 4 | `-397097531` | yes |
+| `workerT1` | Worker Blood Tier 1 | `-773025435` | yes |
+| `workerT2` | Worker Blood Tier 2 | `-2068307944` | yes |
+| `workerT3` | Worker Blood Tier 3 | `1359282533` | yes |
+| `workerT4` | Worker Blood Tier 4 | `1791009885` | yes |
+| `draculaT1` | Dracula Blood Tier 1 | `-488475343` | no |
+| `draculaT2` | Dracula Blood Tier 2 | `2145997375` | no |
+| `draculaT3` | Dracula Blood Tier 3 | `1805033464` | no |
+| `draculaT4` | Dracula Blood Tier 4 | `-2079057224` | no |
+| `draculaT5` | Dracula Blood Tier 5 | `-1923843097` | no |
+| `generalT5` | General Blood Tier 5 | `947312310` | no |
 
-| Key | Stat |
-|---|---|
-| `HP` | Max Health |
-| `PP` | Physical Power |
-| `SP` | Spell Power |
-| `MS` | Movement Speed |
-| `AS` | Primary Attack Speed |
-| `PR` | Physical Resistance |
-| `SR` | Spell Resistance |
-| `phll` | Physical Life Leech |
-| `sll` | Spell Life Leech |
-| `prll` | Primary Life Leech |
-| `PCC` | Physical Critical Strike Chance |
-| `PCD` | Physical Critical Strike Damage |
-| `SCC` | Spell Critical Strike Chance |
-| `SCD` | Spell Critical Strike Damage |
-| `HR` | Healing Received |
-| `DR` | Damage Reduction |
-| `RY` | Resource Yield |
-| `RBD` | Reduced Blood Drain |
-| `SCR` | Spell Cooldown Recovery Rate |
-| `WCR` | Weapon Cooldown Recovery Rate |
-| `UCR` | Ultimate Cooldown Recovery Rate |
-| `MD` | Minion Damage |
-| `AAS` | Ability Attack Speed |
-| `CDR` | Corruption Damage Reduction |
+### Relic buff keys
 
-Some stats are gameplay-active but may not appear in TAB/Eclipse if the client UI does not render that stat type.
+These use the standardized `relic` category.
 
-### Blood-buff keys
 
-Players use these keys with:
-
-```text
-.perk buffbuy <key>
-.perk buffdet <key>
-.perk buffremove <key>
-```
-
-Examples:
-
-```text
-warriorT1
-warriorT2
-warriorT3
-warriorT4
-
-rogueT1
-rogueT2
-rogueT3
-rogueT4
-
-bruteT1
-bruteT2
-bruteT3
-bruteT4
-```
-
-Default blood families:
-
-```text
-bruteT1-T4
-corruptionT1-T4
-creatureT1-T4
-draculinT1-T4
-mutantT1-T4
-rogueT1-T4
-scholarT1-T4
-warriorT1-T4
-workerT1-T4
-```
-
-Disabled by default:
-
-```text
-draculaT1-T5
-generalT5
-```
-
-For the complete key list, see [`docs/KEYS.md`](docs/KEYS.md).
-
-</details>
-
-## Documentation
-
-- [`docs/COMMANDS.md`](docs/COMMANDS.md)
-- [`docs/CONFIG.md`](docs/CONFIG.md)
-- [`docs/CONFIGURATION_GUIDE.md`](docs/CONFIGURATION_GUIDE.md)
-- [`docs/KEYS.md`](docs/KEYS.md)
-
-## Important compatibility notes
-
-PerkShop is server-side. It can apply stats through gameplay systems, but the client attributes UI only displays stat types it knows how to render. Some perks may therefore be gameplay-active without appearing in TAB/Eclipse.
-
-Blood buffs are intentionally renewable timed buffs. They keep a countdown and are reapplied when missing/expired by PerkShop ownership sync. This avoids the stale UI/cleanup problems caused by force-removing vanilla lifetime behavior.
-
-## License
-
-See [`LICENSE`](LICENSE).
+| Key | Display name | PrefabGUID | Enabled by default |
+|---|---|---:|:---:|
+| `relicBehemoth` | Behemoth Relic Blessing | `-1703886455` | yes |
+| `relicManticore` | Manticore Relic Blessing | `-238197495` | yes |
+| `relicMonster` | Monster Relic Blessing | `1068709119` | yes |
+| `relicPaladin` | Paladin Relic Blessing | `-1161197991` | yes |

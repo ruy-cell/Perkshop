@@ -6,7 +6,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>PerkShop</AssemblyName>
     <Description>Chat-command V Rising shop that lets players buy configurable buffs.</Description>
-    <Version>0.2.0</Version>
+    <Version>0.3.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>

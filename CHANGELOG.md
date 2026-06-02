@@ -1,11 +1,20 @@
 # Changelog
 
-## 0.2.1
+## 0.3.0
 
-- Changed perk restoration to manual per-session sync: perks are no longer auto-applied on login and no longer auto-reapplied in the background when missing.
-- Added clearer `.perk help` guidance that owned perks are restored manually with `.perk sync`.
-- Kept the existing in-session duration/lifetime behavior for non-blood perks so synced perks still behave as session-permanent until logout.
-- Changed `blood_buff` purchases and restores to stop mutating live blood buff lifetimes, which fixes crashes when drinking matching blood potions after buying blood perks.
-- Updated blood-buff config notes to reflect the safer non-permanent lifetime handling for native blood buffs.
-- Fixed game-breaking bug where drinking a blood potion while having a bloodbuff perk would crash the game
-- Fixed game-breaking bug where the server could not reapply a bloodbuff while also having the bloodtype active, ending up in a crash. 
+- Added the full default relic perk set to the available buy list: `relicBehemoth`, `relicManticore`, `relicMonster`, and `relicPaladin`.
+
+- Added per-entry currency overrides for buff and stat purchases while preserving the global default currency.
+- Added relic tower buffs to the default config under the standardized `relic` category:
+  - `relicBehemoth`
+  - `relicManticore`
+  - `relicMonster`
+  - `relicPaladin`
+- Added the default `relic` buff category and placed it on the renewable timed lane.
+- Improved command documentation so each command is described, not just listed.
+- Fused docs markdown content into the README, then trimmed the README so it keeps one clean command/config/key reference.
+- Fixed the relic category key mismatch by standardizing the default category name to `relic`.
+
+## 0.2.0
+
+- Added per-entry currency overrides groundwork and relic shop support in the active source branch.
